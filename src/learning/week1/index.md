@@ -18,8 +18,8 @@ Enhance your team's TODO list app.
 
 ## Individual Learning
 
-* [ ] Add more data to enrich your personal resume app. Data must include typical items that go on your resume.
-* [ ] The data must be pulled from Firebase in realtime, rather than hardcoded.
+* [X] Add more data to enrich your personal resume app. Data must include typical items that go on your resume.
+* [X] The data must be pulled from Firebase in realtime, rather than hardcoded.
 
 ### Submission
 
