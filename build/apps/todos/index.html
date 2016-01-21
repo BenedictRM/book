@@ -1,6 +1,24 @@
 <!DOCTYPE html>
 <html>
   <head>
+	<style>
+	  #navbar {
+		display: flex;
+		justify-content: center;
+	  }
+	  #navbar li {
+		width: 120px;
+		text-align: center;
+	    font-size: 18px;
+	  }
+	  #navbar li a {
+	    display: block;
+	  }
+	  #navbar li:hover {
+		background-color: #555;
+		color: white;
+	  }
+	</style>
 	<!--Import Google Icon Font-->
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<!--Import materialize.css-->
@@ -16,7 +34,6 @@
 	  <li><a href="#!">Steven Tang</a></li>
 	  <li><a href="#!">Dominic Tonozzi</a></li>
 	  <li><a href="#!">Jacob Resman</a></li>
-	  <li><a href="#!">Evan Brookens</a></li>
 	</ul>
 
   	<nav class="blue-grey darken-1">
@@ -42,37 +59,20 @@
 			</div>
 		</div>
 	</div>
-	<div class="container">
-		<div class="row">
-			<ul class="collection" id="tasks"></ul>
-			<div class="col s12 m6"></div>
-		</div>
-	</div>
 
-	<script>
-
-	  // create a firebase reference to the root
-	  var ref = new Firebase('https://rockemsockemrobotstodo.firebaseio.com/');
-
-	  // read data from the location todos/tasks, only once
-	  ref.child('todos/tasks').once('value', function(snapshot){
-		   
-	    snapshot.forEach(function(childSnapshot) {
-		   var key = childSnapshot.key();
-		   var childData = childSnapshot.val();
-		   $('#tasks').append(' <div class="card-panel hoverable"> <div class="card blue-grey darken-1"> <div class="card-content white-text"> <span class="card-title">'
-		   +childData.Title+'</span> </div> <div class="card-action"> <p class="orange-text">Priority: </p>' +childData.Priority+ '<p class="orange-text">Deadline: </p>' +childData.Deadline+ ' </div> </div> </div>')
-			
-		})
-	  });
-
-	</script>
+	<nav class="blue-grey darken-1">
+	  <ul id="navbar">
+		<li><a href="/apps/todos/low.html">Low</a></li>
+		<li><a href="/apps/todos/medium.html">Medium</a></li>
+		<li><a href="/apps/todos/high.html">High</a></li>
+	  </ul>
+	</nav>
 	
 	<!--Submit a new JSON task object-->
 	<script>
 	   //source: http://stackoverflow.com/questions/20929515/submitting-data-from-text-box-to-firebase-not-working
-	   var url = "https://rockemsockemrobotstodo.firebaseio.com/todos/tasks/";   
-	   var ref = new Firebase('https://rockemsockemrobotstodo.firebaseio.com/todos/tasks');
+	   var url = "https://rockemsockemrobotstodo.firebaseio.com/todos/";
+	   var ref = new Firebase('https://rockemsockemrobotstodo.firebaseio.com/todos');
 	   var Task = "Task";
 	   
        function submitMe()
@@ -83,25 +83,30 @@
 		   var numberOfJSON;
 		   var firebaseRef;
 		   var task;
+
+		   url = url.concat(priority)
+		   // ref = new Firebase(url);
 		   
 		   <!--get number of json objects in DB and create a new url-->
-		   ref.once('value', function(snapshot){
+		   ref.child(priority).once('value', function(snapshot){
 			   numberOfJSON = snapshot.numChildren();
 			   numberOfJSON = numberOfJSON.toString();
 			   Task = Task.concat(numberOfJSON);
-			   url = url.concat(Task);
+			   url = url.concat('/' + Task);
 			   firebaseRef = new Firebase(url);
-			   task = {Title: title, Priority: priority, Deadline: deadline};
-			   firebaseRef.setWithPriority(task,priority);
+			   task = {Deadline: deadline, Title: title};
+			   firebaseRef.set(task);
 		   });
 		
+		   console.log(ref);
+
 		   alert("submitted captain!");
 		   evt.preventDefault();
        }
 	</script>
 	
 	<form>
-	    <fieldset style="width: 325px;" class="z-depth-4" >
+	    <fieldset style="text-align: center; margin: 50px auto 50px auto; width: 400px;" class="z-depth-4" >
 			<legend class="center">Add A Task:</legend>
 			<div class="task-title">
 				 <label><font size="3" color="red">Task:</font></label>
