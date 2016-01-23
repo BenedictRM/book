@@ -36,16 +36,20 @@
 	  <li><a href="#!">Jacob Resman</a></li>
 	</ul>
 
-  	<nav class="blue-grey darken-1">
+  	<ul id="nav_dropdown" class="dropdown-content">
+		<li><a href="/">Home</a></li>
+		<li><a href="/apps/todos/inbox.html">Inbox</a></li>
+	</ul>
+	<nav class="blue-grey darken-1">
 		<div class="nav-wrapper container">
 			<div class="col s6">
 				<a id="logo-container" href="/src/apps/todos/index.html" class="header orange-text brand-logo center">Team Rock 'em Sock 'em Robots</a>
 				<ul class="right hide-on-med-and-down">
-				    <li><a class="dropdown-button" href="#!" data-activates="dropdown1">Team Members<i class="material-icons right">arrow_drop_down</i></a></li>
-			    </ul>
-				    <ul id="nav-mobile" class="left hide-on-med-and-down">
-		        	<li><a href="/">Home</a></li>
-		      </ul>
+					<li><a class="dropdown-button" href="#!" data-activates="dropdown1">Team Members<i class="material-icons right">arrow_drop_down</i></a></li>
+				</ul>
+				<ul id="nav-mobile" class="left hide-on-med-and-down">
+					<li><a class="dropdown-button" href="#!" data-activates="nav_dropdown">Menu<i class="material-icons right">arrow_drop_down</i></a></li>
+				</ul>
 			</div>
 		</div>
 	</nav>
@@ -68,6 +72,124 @@
 	  </ul>
 	</nav>
 	
+	<div class="container">
+		<div class="row">
+			<ul class="collection with-header" id="tasks" > <li class="collection-header"><h3>Current Tasks: </h3></li></ul>
+			<ul class="collection with-header" id="tasksLow" > <li class="collection-header"><h5>Low Priority: </h5></li></ul>
+			<ul class="collection with-header" id="tasksMed" > <li class="collection-header"><h5>Medium Priority: </h5></li></ul>
+			<ul class="collection with-header" id="tasksHigh" > <li class="collection-header"><h5>High Priority: </h5></li></ul>
+			<div class="col s12 m6"></div>
+		</div>
+	</div>
+	
+	<script>
+		// create a firebase reference to the root
+		var ref = new Firebase('https://rockemsockemrobotstodo.firebaseio.com/');
+
+		function completeLow(reference)
+		{
+			var completeRef = new Firebase('https://rockemsockemrobotstodo.firebaseio.com/todos/Low/' + reference);
+			var checkRef = new Firebase('https://rockemsockemrobotstodo.firebaseio.com/todos/Low/');
+			// read data from the location todos/tasks/Medium
+			checkRef.once('value', function(snapshot) {
+				snapshot.forEach(function(childSnapshot) {
+					var childData = childSnapshot.val();
+					if(childSnapshot.key() == reference){
+					    //Check that the task hasn't already been completed
+						if(childData.Complete == false){
+							//Clear the list before reload happens since firebase on function fails to handle deletion reload
+							document.getElementById("tasksLow").innerHTML = "";
+							completeRef.update({Complete: true});
+						}
+						else{
+							//Toggle complete and set it to false
+							document.getElementById("tasksLow").innerHTML = "";
+							completeRef.update({Complete: false});
+						}
+					}
+				})
+			});		
+		}
+		
+		function completeMedium(reference)
+		{
+			var completeRef = new Firebase('https://rockemsockemrobotstodo.firebaseio.com/todos/Medium/' + reference);
+			var checkRef = new Firebase('https://rockemsockemrobotstodo.firebaseio.com/todos/Medium/');
+			// read data from the location todos/tasks/Medium
+			checkRef.once('value', function(snapshot) {
+				snapshot.forEach(function(childSnapshot) {
+					var childData = childSnapshot.val();
+					if(childSnapshot.key() == reference){
+					    //Check that the task hasn't already been completed
+						if(childData.Complete == false || childData.Complete == null){
+							//Clear the list before reload happens since firebase on function fails to handle deletion reload
+							document.getElementById("tasksMed").innerHTML = "";
+							completeRef.update({Complete: true});
+						}
+						else{
+							//Toggle complete and set it to false
+							document.getElementById("tasksLow").innerHTML = "";
+							completeRef.update({Complete: false});
+						}
+					}
+				})
+			});	
+		}
+		
+		function completeHigh(reference)
+		{
+			var completeRef = new Firebase('https://rockemsockemrobotstodo.firebaseio.com/todos/High/' + reference);
+			var checkRef = new Firebase('https://rockemsockemrobotstodo.firebaseio.com/todos/High/');
+			// read data from the location todos/tasks/High
+			checkRef.once('value', function(snapshot) {
+				snapshot.forEach(function(childSnapshot) {
+					var childData = childSnapshot.val();
+					if(childSnapshot.key() == reference){
+					    //Check that the task hasn't already been completed
+						if(childData.Complete == false || childData.Complete == null){
+							//Clear the list before reload happens since firebase on function fails to handle deletion reload
+							document.getElementById("tasksHigh").innerHTML = "";
+							completeRef.update({Complete: true});
+						}
+						else{
+							//Toggle complete and set it to false
+							document.getElementById("tasksLow").innerHTML = "";
+							completeRef.update({Complete: false});
+						}
+					}
+				})
+			});	
+		}
+
+		// read data from the location todos/tasks/Low
+		ref.child('todos/Low').on('value', function(snapshot) {
+		snapshot.forEach(function(childSnapshot) {
+			var childData = childSnapshot.val();
+			var childKey = childSnapshot.key();
+			$('#tasksLow').append('<li class="collection-item"><b>'+ childData.Title +'</b><br>Complete: <font color="orange">'+ childData.Complete +'</font>  <div class="alternate-option"> <button class="btn waves-effect waves-green green darken-1" onclick = completeLow("'+childKey+'")>Complete Task</button></div> </li> ')
+			})
+		});
+		
+		// read data from the location todos/tasks/Medium
+		ref.child('todos/Medium').on('value', function(snapshot) {
+		snapshot.forEach(function(childSnapshot) {
+			var childData = childSnapshot.val();
+			var childKey = childSnapshot.key();
+			$('#tasksMed').append('<li class="collection-item"><b>'+ childData.Title +'</b><br>Complete: <font color="orange">'+ childData.Complete +'</font>  <div class="alternate-option"> <button class="btn waves-effect waves-green green darken-1" onclick = completeMedium("'+childKey+'")>Complete Task</button></div> </li> ')
+			})
+		});
+		
+		// read data from the location todos/tasks/High
+		ref.child('todos/High').on('value', function(snapshot) {
+		snapshot.forEach(function(childSnapshot) {
+			var childData = childSnapshot.val();
+			var childKey = childSnapshot.key();
+			$('#tasksHigh').append('<li class="collection-item"><b>'+ childData.Title +'</b><br>Complete: <font color="orange">'+ childData.Complete +'</font>  <div class="alternate-option"> <button class="btn waves-effect waves-green green darken-1" onclick = completeHigh("'+childKey+'")>Complete Task</button></div> </li> ')
+			})
+		});
+	
+	</script>
+	
 	<!--Submit a new JSON task object-->
 	<script>
 	   //source: http://stackoverflow.com/questions/20929515/submitting-data-from-text-box-to-firebase-not-working
@@ -80,6 +202,7 @@
 	       var title =  document.getElementById('title').value;
 		   var priority = document.getElementById('priority').value;
 		   var deadline = document.getElementById('deadline').value;
+		   var completed = false;
 		   var numberOfJSON;
 		   var firebaseRef;
 		   var task;
@@ -90,11 +213,18 @@
 		   <!--get number of json objects in DB and create a new url-->
 		   ref.child(priority).once('value', function(snapshot){
 			   numberOfJSON = snapshot.numChildren();
+			   numberOfJSON++;//keep from looping in task creation
 			   numberOfJSON = numberOfJSON.toString();
 			   Task = Task.concat(numberOfJSON);
 			   url = url.concat('/' + Task);
 			   firebaseRef = new Firebase(url);
-			   task = {Deadline: deadline, Title: title};
+			   
+			   task = {
+			       Deadline: deadline, 
+				   Title: title, 
+				   Complete: completed
+			   };
+				
 			   firebaseRef.set(task);
 		   });
 		
@@ -103,6 +233,7 @@
 		   alert("submitted captain!");
 		   evt.preventDefault();
        }
+
 	</script>
 	
 	<form>
