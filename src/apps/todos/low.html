@@ -68,12 +68,14 @@
         <li><a href="/apps/todos/high.html">High</a></li>
     </ul>
 </nav>
+
 <div class="container">
     <div class="row">
         <ul class="collection" id="tasks"></ul>
         <div class="col s12 m6"></div>
     </div>
 </div>
+
 <script>
 // create a firebase reference to the root
 var ref = new Firebase('https://rockemsockemrobotstodo.firebaseio.com/');
@@ -95,12 +97,16 @@ var onComplete = function(error) {
   }
 };
 
-// read data from the location todos/tasks, only once
+// read data from the location todos/tasks
 ref.child('todos/Low').on('value', function(snapshot) {
     snapshot.forEach(function(childSnapshot) {
         var childData = childSnapshot.val();
 		var childKey = childSnapshot.key();
-        $('#tasks').append(' <div class="card-panel hoverable"> <div class="card blue-grey darken-1"> <div class="card-content white-text"> <span class="card-title">' + childData.Title + '</span> </div> <div class="card-action"> <p class="orange-text">Deadline: </p>' + childData.Deadline + '<p class="orange-text">Priority: </p> Low</div> </div> <button class="btn waves-effect waves-light red" onclick = deleteMe("'+childKey+'") type="submit">Delete Task<i class="material-icons right">send</i></button> </div>')
+        $('#tasks').append(' <div class="card-panel hoverable"> <div class="card blue-grey darken-1"> <div class="card-content white-text"> <span class="card-title">' + childData.Title + '</span> </div> <div class="card-action"> <p class="orange-text">Deadline: </p>' + childData.Deadline + '<p class="orange-text">Priority: </p> Low<p class="orange-text assign">Assigned: </p>' + '<p class="assigned-person">' + childData.Assigned + '</p></div> </div> <button class="btn waves-effect waves-light red" onclick = deleteMe("'+childKey+'") type="submit">Delete Task<i class="material-icons right">send</i></button> </div>')
+		if (!childData.Assigned){
+			$(".assigned-person").hide();
+			$(".assign").hide();
+		}
 
     })
 });
@@ -112,36 +118,41 @@ var url = "https://rockemsockemrobotstodo.firebaseio.com/todos/";
 var ref = new Firebase('https://rockemsockemrobotstodo.firebaseio.com/todos');
 var Task = "Task";
 
-function submitMe() {
-    var title = document.getElementById('title').value;
-    var priority = document.getElementById('priority').value;
-    var deadline = document.getElementById('deadline').value;
-    var numberOfJSON;
-    var firebaseRef;
-    var task;
+function submitMe()
+{
+   var title =  document.getElementById('title').value;
+   var priority = document.getElementById('priority').value;
+   var deadline = document.getElementById('deadline').value;
+   var completed = false;
+   var numberOfJSON;
+   var firebaseRef;
+   var task;
 
-    url = url.concat(priority)
-        // ref = new Firebase(url);
+   url = url.concat(priority)
+   // ref = new Firebase(url);
+   
+   <!--get number of json objects in DB and create a new url-->
+   ref.child(priority).once('value', function(snapshot){
+	   numberOfJSON = snapshot.numChildren();
+	   numberOfJSON++;//keep from looping in task creation
+	   numberOfJSON = numberOfJSON.toString();
+	   Task = Task.concat(numberOfJSON);
+	   url = url.concat('/' + Task);
+	   firebaseRef = new Firebase(url);
+	   
+	   task = {
+		   Deadline: deadline, 
+		   Title: title, 
+		   Complete: completed
+	   };
+		
+	   firebaseRef.set(task);
+   });
 
-    <!--get number of json objects in DB and create a new url-->
-    ref.child(priority).once('value', function(snapshot) {
-        numberOfJSON = snapshot.numChildren();
-		numberOfJSON++;//keep from looping in task creation
-        numberOfJSON = numberOfJSON.toString();
-        Task = Task.concat(numberOfJSON);
-        url = url.concat('/' + Task);
-        firebaseRef = new Firebase(url);
-        task = {
-            Deadline: deadline,
-            Title: title
-        };
-        firebaseRef.set(task);
-    });
+   console.log(ref);
 
-    console.log(ref);
-
-    alert("submitted captain!");
-    evt.preventDefault();
+   alert("submitted captain!");
+   evt.preventDefault();
 }
 </script>
 <form>
