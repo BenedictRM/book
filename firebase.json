@@ -1,5 +1,5 @@
 {
-  "firebase": "rockemsockemrobotstodo",
+  "firebase": "mehring-resume",
   "public": "build",
   "ignore": [
     "firebase.json",
