@@ -33,15 +33,15 @@
 	    </nav>
 	  
         
-		<div style="background-image: url('img/chicago.jpg'); margin-top: -31px; height: 350px;">
+		<div style="background-image: url('img/skyline.jpg'); margin-top: -31px; height: 350px;">
 			<div class="container">
 				<div class="row">
-					<h1 class="center" style="font-family:'Arial Black', 'Arial Bold'; padding-top: 100px;">MY FAVORITE CITIES!</h1>
+					<h1 class="center" style="font-family:'Arial Black', 'Arial Bold'; color: white; padding-top: 100px; style='color:white;'">MY FAVORITE CITIES!</h1>
 				</div>
 			</div>
 		</div>
 		
-        <div id="cities"></div>
+        <div class = "row" id="cities"></div>
         <div id="map" style="height:500px"></div>
 		
       </div>
@@ -49,52 +49,38 @@
       <script>
 
 		// create a firebase reference to the root
-		var weatherRefDenver = new Firebase('https://publicdata-weather.firebaseio.com/denver');
-		var weatherRefSanFran = new Firebase('https://publicdata-weather.firebaseio.com/sanfrancisco');
-		var weatherRefPortland = new Firebase('https://publicdata-weather.firebaseio.com/portland');
-		var weatherRefSeattle = new Firebase('https://publicdata-weather.firebaseio.com/seattle');
-		var weatherRefChicago = new Firebase('https://publicdata-weather.firebaseio.com/chicago');
-		
+		var weatherReference = new Firebase('https://publicdata-weather.firebaseio.com');
 		var attributionText = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a       href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>'
 		// initialzie the map
 		var map = L.map($('#map')[0]).setView([39.50, -98.35], 4)
 		// create a layer group to hold all the markers
 		var markersLayerGroup = L.layerGroup()
 		var data
-
-		// read data from Denver only once
-		weatherRefDenver.on('value', function(snapshot){
-		  var city = snapshot.val()
-		  mapCity(city)
-		  displayCity(city, 'denver')
-		})
 		
-		// read data from San Francisco only once
-		weatherRefSanFran.on('value', function(snapshot){
+		// read data from reference continuously
+		weatherReference.on('value', function(snapshot){
+		  //Grab all city data
 		  var city = snapshot.val()
-		  mapCity(city)
-		  displayCity(city, 'sanfrancisco')
-		})
-		
-		// read data from Portland only once
-		weatherRefPortland.on('value', function(snapshot){
-		  var city = snapshot.val()
-		  mapCity(city)
-		  displayCity(city, 'portland')
-		})
-		
-		// read data from Seattle only once
-		weatherRefSeattle.on('value', function(snapshot){
-		  var city = snapshot.val()
-		  mapCity(city)
-		  displayCity(city, 'seattle')
-		})
-		
-		// read data from Chicago only once
-		weatherRefChicago.on('value', function(snapshot){
-		  var city = snapshot.val()
-		  mapCity(city)
-		  displayCity(city, 'chicago')
+		  
+		  //clear layers on update
+		  markersLayerGroup.clearLayers()
+	      $('#cities').empty()
+		  
+		  //denver
+		  mapCity(city['denver'], 'Denver')
+		  displayCity(city['denver'], 'denver', 'img/denver.jpg')
+		  //san francisco
+		  mapCity(city['sanfrancisco'], 'San Francisco')
+		  displayCity(city['sanfrancisco'], 'sanfrancisco', 'img/sanfran.jpg')
+		  //portland
+		  mapCity(city['portland'], 'Portland')
+		  displayCity(city['portland'], 'portland', 'img/portland.jpg')
+		  //chicago
+		  mapCity(city['chicago'], 'Chicago')
+		  displayCity(city['chicago'], 'chicago', 'img/chicago.jpg')
+		  //seattle
+		  mapCity(city['seattle'], 'Seattle')
+		  displayCity(city['seattle'], 'seattle', 'img/seattle.jpg')
 		})
 
 		//Initial map ***Fails to display in Chrome--check in localhost, if that works it's working in other browsers
@@ -109,31 +95,26 @@
 		markersLayerGroup.addTo(map)
 
 		// visualize cities on the map
-		function mapCity(city){
-		  console.log('mapCity', city)
+		function mapCity(city, cityName){
 		  var latlng = [city.latitude, city.longitude]
-		  var circle = L.circle(latlng, 10, {
-			  color: 'red',
-			  fillColor: '#f03',
-			  fillOpacity: 0.5
-		  }).bindLabel('Austin')
-		  
-		  markersLayerGroup.addLayer(circle)
+		  //Create a weather icon object
+		  var WeatherIcon = L.Icon.Default.extend({
+			options: {
+			      //get current condition and pull a png file in
+				  iconUrl: "img/" + city.currently.icon + ".png",
+				  iconSize: [35,35]
+			}
+		  })
+		  var icon = new WeatherIcon();
+		  //Add layer to the map
+		  L.marker(latlng, {icon: icon}).bindLabel(cityName + ": Current Conditions: " + city.currently.summary).addTo(map);
 		}
 		
 		//Display weather information about the city
-		function displayCity(city, name){
-		  var cityName = name.toUpperCase();
-		  console.log('displayCity', city);
-		  
+		function displayCity(city, name, imgUrl){
+		  var cityName = name.toUpperCase();	  
 		  //Adjust to hold info inside a card
-		  $('#cities').append('<div class="card-panel hoverable"> <div class="card blue-grey darken-1"> <div class="card-content white-text"> <span class="card-title">' + cityName + '</span> </div> <div class="card-action"> <p class="orange-text">Deadline: </p> </div>')
-		  
-		  /*
-		  $('#cities').append('<li class="collection-item">' + name +
-			' humidity = ' +
-			JSON.stringify(city.currently) + '</li>')
-		  */
+		  $('#cities').append(' <div class="col s12 m6"> <div class="card-panel hoverable"> <div class="card-image waves-effect waves-block waves-light"> <div class="card blue darken-1">  <div class="card-content white-text"> <div class="card-image"> <img class="activator" src='+imgUrl+'> <span class="card-title"> <font size="6">' + cityName + '</font></span> </div> </div> <div class="card-action"> <p class="white-text"><font size="5"> Weather Information </font></p> </div> <div class="card-reveal">  <div class="card blue darken-1"> <span class="card-title grey-text text-darken-4"><b><font size = 6>'+cityName+' </font></b><i class="material-icons right">close</i></span> <p><b><font size = 5>Weather Summary: </font></b> '+JSON.stringify(city.daily.summary)+' </p> <p><b>Humidity: </b> '+JSON.stringify(city.currently.humidity)+'</p> <p><b>Temperature: </b> '+JSON.stringify(city.currently.temperature)+'</p> <p><b>Overall Conditions: </b> '+JSON.stringify(city.currently.summary)+'</p> <p><b>Wind Speed: </b> '+JSON.stringify(city.currently.windSpeed)+'</p> <p><b> Probability of </b> '+JSON.stringify(city.currently.precipType)+'<b> : </b>'+JSON.stringify(city.currently.precipProbability)+'</p> <p><b>Nearest Storm: </b> '+JSON.stringify(city.currently.nearestStormDistance)+' miles</p> </div> </div> </div> </div> </div>')
 		}
 
       </script>
