@@ -39,7 +39,7 @@ Friday @ 11:59pm, 2/4/2016
   * [X] The [_Garage Spaces_](/apps/parking/react/components/garage-spaces.js) component should be fully implemented.
   * [X] The [_Garage Rates_](/apps/parking/react/components/garage-rates.js) component should be fully implemented.
   * [X] The [_Garage Hours_](/apps/parking/react/components/garage-hours.js) component should be fully implemented.
-* [ ] The app should be reasonably pretty, as close to the styling / design of your team's original garage app as possible.
+* [X] The app should be reasonably pretty, as close to the styling / design of your team's original garage app as possible.
 
 Hints:
 * The data for the team homework is a static JSON file, to make it simpler for you. But
@@ -59,15 +59,15 @@ Sunday @ 11:59pm, 2/7/2016
 
 ### Requirements
 
-* [ ] The [_About_](/apps/resume/react/components/about.js) component should be fully implemented.
-  * [ ] Name
-  * [ ] Profile photo
-  * [ ] Major or degree information
-  * [ ] Github link  
-* [ ] The [_Skill List_](/apps/resume/react/components/skill-list.js) component should be fully implemented.
-* [ ] The [_Task List_](/apps/resume/react/components/task-list.js) component should be fully implemented.
-* [ ] The [_City List_](/apps/resume/react/components/city-list.js) component should be fully implemented.
-* [ ] Data used to populate the skill list, task list, and city list should come from
+* [X] The [_About_](/apps/resume/react/components/about.js) component should be fully implemented.
+  * [X] Name
+  * [X] Profile photo
+  * [X] Major or degree information
+  * [X] Github link  
+* [X] The [_Skill List_](/apps/resume/react/components/skill-list.js) component should be fully implemented.
+* [X] The [_Task List_](/apps/resume/react/components/task-list.js) component should be fully implemented.
+* [X] The [_City List_](/apps/resume/react/components/city-list.js) component should be fully implemented.
+* [X] Data used to populate the skill list, task list, and city list should come from
 appropriate Firebase locations.
 
 ### Submission
