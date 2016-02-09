@@ -1,44 +1,45 @@
 MyComponents.Rate = React.createClass({
- render: function() {
-
-   var keyMap = {'BEG': 'Beginning', 'END': 'End', 'RATE': 'Rate', 'RQ': 'Type of Rate', 'RR': 'Other Info', 'DESC': 'Description', }
-   var vals = [];
-   for(var key in this.props.rate) {
-     vals.push(<span key={key}>{keyMap[key]}: {this.props.rate[key]}<br /></span>);
-   }
-
-   return (
-
-       <span className="card-content">
-        <br /> { vals }----------------------------------------------------------------------------------<br />
-       </span>
-   );
- }
+  render: function() {
+  
+    var desc = this.props.rate.DESC;
+    var rr = this.props.rate.RR;
+    var beg = this.props.rate.BEG;
+    var end = this.props.rate.END;
+    var rate = this.props.rate.RATE;
+    var rq = this.props.rate.RQ;
+    
+    
+    return (
+      <li className="collection-item">{desc} {beg} {end} $<b>{rate}</b> {rq} {rr}</li>
+    );
+  }
 });
 
 
 MyComponents.GarageRates = React.createClass({
   render: function() {
-
-    var rates = this.props.rates.map(function(r,i){
-      return <MyComponents.Rate rate={r} key={i}/>
-    })
+    
+    var rates;
+    try{
+      rates = this.props.rates.map(function(h,i){
+        return <MyComponents.Rate rate={h} key={i}/>
+      })
+    }
+    catch(err){
+      rates = [ <MyComponents.Rate rate={this.props.rates} key={0} /> ]
+      //rates = Object.keys(this.props.rates).map(function(h,i){
+        //return <MyComponents.Rate rate={this.props.rates} key={i}/>
+      //})
+    }
+   
 
     return (
-      <div className="row">
-        <div className="col s12 m9">
-          <div className="card">
-            <div className="card-image waves-effect waves-block waves-light">
-              <img className="activator" src="http://www.rentenbach.com/Uploads/Images/PhotoGalleries/VA%20Tech%20Parking%20Deck%204[1].JPG" height="500"></img>
-            </div>
-            <div className="card-content">
-              <span className="card-title activator grey-text text-darken-4">Garage Rate Info<i className="material-icons right">more_vert</i></span>
-            </div>
-            <div className="card-reveal">
-              <span className="card-title grey-text text-darken-4">Garage Rate Info:<i className="material-icons right">close</i></span>
-              {rates}
-            </div>
-          </div>
+      <div className="card black lighten">
+        <div className="card-content white-text">
+          <span className="card-title">Rates</span>
+          <ul className="collection black-text">
+            {rates}
+          </ul>
         </div>
       </div>
     );

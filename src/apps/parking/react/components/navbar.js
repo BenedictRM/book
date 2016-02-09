@@ -2,14 +2,8 @@ MyComponents.NavBar = React.createClass({
   render: function() {
     return (
       <nav>
-        <div className="nav-wrapper green lighten-2">
-        <a href="#" className="brand-logo center"><font face="Book Antigua" size="9">Garage Viewer</font></a>
-        <ul id="nav-mobile" className="left hide-on-med-and-down">
-		  <li><a href="/">Course Home</a></li>
-		  <li><a href="index.html">Home</a></li>
-		  <li><a href="garages.html">List</a></li>
-		  <li><a href="/apps/parking/garages_map.html">Map</a></li>
-        </ul>
+        <div className="nav-wrapper black">
+          <a id="name" href="#" className="brand-logo center">Team Twos's Parking App</a>
         </div>
       </nav>
     );

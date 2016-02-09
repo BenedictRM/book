@@ -1,188 +1,159 @@
 <!DOCTYPE html>
-<html>
+  <html>
+    <head>
+      <!--Import Google Icon Font-->
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <!--Import materialize.css-->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
+      <!--Let browser know website is optimized for mobile-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
 
-<head>
-    <style>
-	#background {
-		background-color: lightgray;
-		padding: 30px;
-	}
-	
-    #navbar {
-        display: flex;
-        justify-content: center;
-    }
-    
-    #navbar li {
-        width: 120px;
-        text-align: center;
-        font-size: 18px;
-    }
-    
-    #navbar li a {
-        display: block;
-    }
-    
-    #navbar li:hover {
-        background-color: #555;
-        color: white;
-    }
-    </style>
-    <!--Import Google Icon Font-->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <!--Import materialize.css-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
-    <!--Let browser know website is optimized for mobile-->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-</head>
+    <body>
+      <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+      <script src="https://cdn.firebase.com/js/client/2.3.2/firebase.js"></script>
 
-<!-- Dropdown of team member names -->
-<ul id="dropdown1" class="dropdown-content">
-    <li><a href="#!">Russ Mehring</a></li>
-    <li><a href="#!">Steven Tang</a></li>
-    <li><a href="#!">Dominic Tonozzi</a></li>
-    <li><a href="#!">Jacob Resman</a></li>
-</ul>
+      <div class="container">
 
-<ul id="nav_dropdown" class="dropdown-content">
-    <li><a href="/">Home</a></li>
-    <li><a href="/apps/todos/index.html">Todos</a></li>
-</ul>
-
-<nav class="blue-grey darken-1">
-    <div class="nav-wrapper container">
-        <div class="col s6">
-            <a id="logo-container" href="/src/apps/todos/index.html" class="header orange-text brand-logo center">Team Rock 'em Sock 'em Robots</a>
-            <ul class="right hide-on-med-and-down">
-                <li><a class="dropdown-button" href="#!" data-activates="dropdown1">Team Members<i class="material-icons right">arrow_drop_down</i></a></li>
-            </ul>
-            <ul id="nav-mobile" class="left hide-on-med-and-down">
-                <li><a class="dropdown-button" href="#!" data-activates="nav_dropdown">Menu<i class="material-icons right">arrow_drop_down</i></a></li>
-            </ul>
-        </div>
-    </div>
-</nav>
-
-<body>
-
-    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
-    <script src="https://cdn.firebase.com/js/client/2.3.2/firebase.js"></script>
-
-    <div class="container" id="background">
         <h1> Adding a Task </h1>
-        <div class="row">
-            <div class="input-field col s12">
-                <input value="" id="title" type="text" class="validate">
-                <label for="title">Title</label>
-            </div>
-        </div>
 
+		<div class="row">
+		  <form class="col s12">
+			<div class="row">
+			  <div class="input-field col s12">
+				<input id="title" type="text" class="validate" length="100">
+				<label for="title">Title</label>
+			  </div>
+			</div>
+		  </form>
+		</div>
+		
         <div class="row">
-            <div class="input-field col s12">
-                <select id="priority">
-                    <option value="" disabled selected>Choose Priority</option>
-                    <option value="High">High</option>
-                    <option value="Medium">Medium</option>
-                    <option value="Low">Low</option>
-                </select>
-                <label>Priority</label>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="input-field col s12">
-                <input id="deadline" type="date" class="datepicker">
-                <label>Due Date</label>
-            </div>
+          <div class="input-field col s12">
+             <select id="priority">
+               <option value="" disabled selected>Choose Priority</option>
+               <option value="High">High</option>
+               <option value="Medium">Medium</option>
+               <option value="Low">Low</option>
+             </select>
+             <label>Priority</label>
+           </div>
         </div>
 		
 		<div class="row">
-            <div class="input-field col s12">
-                <select id="assigned">
-                    <option value="" disabled selected>Assign Task</option>
-                    <option value="BenedictRM">Russ Mehring</option>
-                    <option value="steventang2013">Steven Tang</option>
-                    <option value="nicot">Dominic Tonozzi</option>
-					<option value="jtresman">Jacob Resman</option>
-                </select>
-                <label>Assigned</label>
-            </div>
+          <div class="input-field col s12">
+             <select id="type">
+               <option value="" disabled selected>Choose Type</option>
+               <option value="School">School</option>
+               <option value="Work">Work</option>
+               <option value="Job">Job</option>
+			   <option value="Fitness">Fitness</option>
+			   <option value="Life">Life</option>
+			   <option value="Chore">Chore</option>
+			   <option value="Leisure">Leisure</option>
+             </select>
+             <label>Type</label>
+           </div>
         </div>
 
-        <!-- TODO: add more form controls for entering task data -->
         <div class="row">
-            <div class="input-field col s12">
-                <a class="waves-effect waves-light btn" id="submit">Submit</a>
-            </div>
+          <div class="input-field col s12">
+             <select id="assigned">
+               <option value="" disabled selected>Assign to</option>
+               <option value="nbroeking">nbroeking</option>
+               <option value="ZachLamb">ZachLamb</option>
+               <option value="MattBubernak">MattBubernak</option>
+			   <option value="doubleshow">doubleshow</option>
+			   <option value="CallanFisher">CallanFisher</option>
+			   <option value="TylerTafoya">TylerTafoya</option>
+             </select>
+             <label>Assign to</label>
+           </div>
         </div>
+		
+		<div class="row">
+			  <div class="input-field col s12">
+				  <label for="due">Due Date</label><br>
+				  <input id="deadline" type="date" class="datepicker">
+				</div>
+		</div>
+		<div class="row">
+			<div class="input-field col s12">
+				  <p>
+				    <label for="status">Status</label><br>
+				    <input class="with-gap" name="status" type="radio" id="complete"  />
+				    <label for="complete">Complete</label>
+				  </p>
+				  <p>
+				    <input class="with-gap" name="status" type="radio" checked="checked" id="notcomplete"  />
+				    <label for="notcomplete">Not Complete</label>
+			      </p>
+				</div>
+		</div>
+		
+        <!-- TODO: add more form controls for entering task data -->
 
-    </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <a class="modal-action modal-close waves-effect waves-light btn" id="submit">Submit</a>
+          </div>
+        </div>
+      </div>
 
-    <script>
-    $('.datepicker').pickadate({
-        format: 'yyyy-mm-dd',
-        selectMonths: true, // Creates a dropdown to control month
-        selectYears: 15 // Creates a dropdown of 15 years to control year
-    });
-    </script>
+      <script>
 
-    <script>
-	var url = "https://rockemsockemrobotstodo.firebaseio.com/todos/";
-	var ref = new Firebase('https://rockemsockemrobotstodo.firebaseio.com/todos');
-	var Task = "Task";
-    $('#submit').click(function() {
-	   var title =  document.getElementById('title').value;
-	   var priority = document.getElementById('priority').value;
-	   var deadline = document.getElementById('deadline').value;
-	   var assigned = document.getElementById('assigned').value;
-	   var completed = false;
-	   var numberOfJSON;
-	   var firebaseRef;
-	   var task;
-	   
-	   url = url.concat(priority)
+        var root = new Firebase('https://ucdd2bookuno.firebaseio.com/')
+        var taskListRef = root.child('todos')
 
-	   ref.child(priority).once('value', function(snapshot){
-		   numberOfJSON = snapshot.numChildren();
-		   numberOfJSON++;//keep from looping in task creation
-		   numberOfJSON = numberOfJSON.toString();
-		   Task = Task.concat(numberOfJSON);
-		   url = url.concat('/' + Task);
-		   firebaseRef = new Firebase(url);
+        $('#submit').click(function(){
+          console.log('the submit button is clicked')
 
-		   task = {
-				Deadline: deadline, 
-				Title: title, 
-				Assigned: assigned,
-				Complete: completed
-			};
-			if (task.Title == "" ||
-				priority == "" ||
-				task.Assigned == "" ||
-				task.Deadline == ""){
-					//if any field is empty, return
-					return;
-				}
+          var title = $('#title').val()
+          console.log('the title is', title)
 
-			firebaseRef.update(task);
-		})
-		console.log(ref);
+          var priority = $('#priority').val()
+          console.log('the priority is', priority)
 
-	    alert("submitted captain!");
-	    evt.preventDefault();
-	})
+          var type = $('#type').val()
+          console.log('the type is', type)
+
+          var assigned = $('#assigned').val()
+          console.log('it is assigned to', assigned)
+
+          var deadline = $('#deadline').val()
+          console.log('the deadline is', deadline)
+		  
+		  var completed = $('#complete').is(':checked') ? "1" : "0";
+		  console.log('complete is', completed)
+
+          var taskObject = {
+	          	assigned: assigned,
+	          	deadline: deadline,
+	          	priority: priority,
+	            title: title,
+	            type: type,
+	            completed: completed 
+          }
+          // TODO: add logic to validate form data before pushing the
+          // data to firebase, only push/set if the required fields are not empty
+
+          // TODO: study why push() and set() are both necessary
+          var newTaskRef = taskListRef.push()
+          newTaskRef.set(taskObject)
+          
+          $('#modal1').closeModal();
+        })
+
         // IMPORTANT!! initialize materializecss select
-    $(document).ready(function() {
-        $('select').material_select();
-    });
-    </script>
-
-</body>
-
-<nav class="blue-grey darken-1 center">
-    <div class="nav-wrapper container">Copyright @ Rock 'em Sock 'em Robots, All Rights Reserved.
-    </div>
-</nav>
-
-</html>
+        $(document).ready(function() {
+          $('select').material_select();
+        });
+		
+		$('.datepicker').pickadate({
+    selectMonths: true, // Creates a dropdown to control month
+    selectYears: 15 // Creates a dropdown of 15 years to control year
+  });
+      </script>
+    </body>
+  </html>

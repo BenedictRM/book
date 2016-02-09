@@ -2,6 +2,7 @@
 logs
 *.log
 npm-debug.log*
+build/
 
 # Runtime data
 pids
@@ -36,7 +37,3 @@ node_modules
 .build
 build
 .DS_Store
-build/apps/resume/index.html
-resume.json
-resume.json
-build/apps/resume/index.html
