@@ -1,8 +1,21 @@
 MyComponents.Task = React.createClass({
 
   render: function() {
+	var assigned = this.props.task.value.Assigned;
+	var deadline = this.props.task.value.Deadline;
+	var completed = this.props.task.value.Complete;
+	var priority = this.props.task.key;
+	var taskType = this.props.task.value.Title;
     return (
-      <li className="collection-item">Task: {this.props.task.title} Priority: {this.props.task.priority} Type: {this.props.task.type} Due: {this.props.task.deadline}</li>
+      <div className="card">
+        <div className="card-content">
+		    <p><b><font size="6" color = "Orange"> {(taskType)}</font></b></p>
+		    <p><b><font size="4" color = "red"> Assigned: </font></b> <font size="3">{JSON.stringify(assigned)}</font></p>
+			<p><b><font size="4" color = "red"> Deadline: </font></b> <font size="3">{JSON.stringify(deadline)}</font></p>
+			<p><b><font size="4" color = "blue"> Priority: </font></b> <font size="3">{JSON.stringify(priority)}</font></p>
+			<p><b><font size="4" color = "red"> Completed: </font></b> <font size="3">{JSON.stringify(completed)}</font></p>	
+        </div>
+      </div>
     );
   }
 });
@@ -10,52 +23,21 @@ MyComponents.Task = React.createClass({
 MyComponents.TaskList = React.createClass({
   render: function() {
 
-    var tasks = [];
-    var completedTasks = [];
+    var taskElements = this.props.tasks.map(function(t,i){
+      return <MyComponents.Task task={t} key={i}/>
+    })
     
-    for( var key in this.props.tasks){
-      if (this.props.tasks.hasOwnProperty(key)) {
-        var task_t = this.props.tasks[key];
-        if( task_t.assigned == "nbroeking"){
-          console.log("Nics Task", task_t)
-          if( task_t.completed == false){
-            console.log("Task completed false ", task_t)
-            var tmp = <MyComponents.Task task={task_t} key={key}/>
-            tasks.push(tmp);
-          }
-          else if( task_t.completed == true){
-            var tmp = <MyComponents.Task task={task_t} key={key}/>
-            completedTasks.push(tmp)
-          }
-        }
-      }
-    }
-
     return (
-      <div className="card blue-grey lighten-1">
-        <div className="row">
-          <div className="col s6">
-            <div className="card blue-grey darken-2">
-              <div className="card-content white-text">
-                <span className="card-title">My Tasks</span>
-                <ul className="collection black-text">
-                {tasks}
-                </ul>
-              </div>
-            </div>
-          </div>
-      
-          <div className="col s6">
-            <div className="card blue-grey darken-2">
-              <div className="card-content white-text">
-                <span className="card-title">My Completed Tasks</span>
-                <ul className="collection black-text">
-                {completedTasks}
-                </ul>
-              </div>
-            </div>
-          </div>
-      
+      <div className="card">
+        <div className="card-content">
+		{/*
+		//Comment out the full array return--calls all tasks
+        TODO: This is a component to display a list of tasks
+        assigned to me. Raw props data is {JSON.stringify(this.props.tasks)}
+        */}
+		
+        {taskElements}
+
         </div>
       </div>
     );

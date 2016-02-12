@@ -1,12 +1,9 @@
 MyComponents.NavBar = React.createClass({
   render: function() {
-    
-    var name = this.props.name;
     return (
       <nav>
-        
-        <div className="nav-wrapper blue-grey">
-        <a href="#" className="brand-logo">{name}</a>
+        <div className="nav-wrapper">
+        <a href="#" className="brand-logo">Resume for Russell Mehring</a>
         <ul id="nav-mobile" className="right hide-on-med-and-down">
           <li><a href="#skills-heading">Skills</a></li>
           <li><a href="#tasks-heading">Tasks</a></li>

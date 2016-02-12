@@ -1,48 +1,50 @@
-MyComponents.City = React.createClass({
+MyComponents.CityCards = React.createClass({
 
   render: function() {
-    
-    var city = this.props.city
+    // inspect this.props.city to make sure we load the data correctly
+	console.log('city', this.props.city)
+	  
     return (
-      <div className="col s4">
-        <div className="card blue-grey darken-2">
-          <div className="card-content white-text">
-            <span className="card-title">{this.props.name}</span>
-              <ul className="collection black-text">
-                <li className="collection-item">{city['currently']['summary'] }</li>
-                  <li className="collection-item">Temperature: {city['currently']['temperature']} degrees F</li>
-                  <li className="collection-item">Chance of Precipitation: {(city['currently']['precipProbability'] * 100)}%</li>
-                  <li className="collection-item">Cloud Cover: {(city['currently']['cloudCover']*100)}%</li>                               <li className="collection-item">Humidity: {(city['currently']['humidity']*100)}%</li>
-                  <li className="collection-item">Visability: {city['currently']['visibility']} miles</li>
-              </ul>
+      <div className="row">
+        <div className="col s12 m6">
+          <div className="card">
+            <div className="card-image waves-effect waves-block waves-light">
+              <img className="activator" src={'img/'+this.props.city.key+'.jpg'}></img>
+            </div>
+            <div className="card-content">
+              <span className="card-title activator grey-text text-darken-4">{this.props.city.key}<i className="material-icons right">more_vert</i></span>
+            </div>
+            <div className="card-reveal">
+              <span className="card-title grey-text text-darken-4">{this.props.city.key}<i className="material-icons right">close</i></span>
+              <li><a className="white"><b>Weather Summary:  </b>{this.props.city.value.summary}</a></li>
+			  <li><a className="white"><b>Humidity:  </b>{this.props.city.value.humidity}</a></li>
+			  <li><a className="white"><b>Temperature:  </b>{this.props.city.value.temperature}</a></li>
+			  <li><a className="white"><b>Wind Speed:  </b>{this.props.city.value.windSpeed} mph</a></li>
+			  <li><a className="white"><b>Nearest Storm:  </b>{this.props.city.value.nearestStormDistance} miles</a></li>
             </div>
           </div>
         </div>
+      </div>
     );
   }
-
 });
 
 MyComponents.CityList = React.createClass({
   render: function() {
 
-    var displaycities = [];
+    var cityElements = this.props.cities.map(function(c,i){
+      return <MyComponents.CityCards city={c} key={i}/>
+    })
     
-    for( var key in this.props.cities){
-      if (this.props.cities.hasOwnProperty(key)) {
-        var city_t = this.props.cities[key];
-        var tmp = <MyComponents.City city={city_t} name={key} key={key}/>
-        displaycities.push(tmp);
-
-      }
-    }
-
+	// inspect this.props.cities to make sure we load the data correctly
+	console.log('cities', this.props.cities)
+	
     return (
-      <div className="card blue-grey lighten-1">
-        <div className="card-content white-text">
-          <div className="row">
-          {displaycities}
-          </div>
+      <div className="card">
+        <div className="card-content">
+        
+        {cityElements}
+
         </div>
       </div>
     );
