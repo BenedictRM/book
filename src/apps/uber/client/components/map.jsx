@@ -5,20 +5,23 @@ class MapView extends React.Component {
   render(){
 
     const providers = this.props.providers
+    var provider_icon = L.icon({
+      iconUrl: 'img/provider_icon.png',
+      iconSize: [40, 40],
+      iconAnchor: [0, 40],
+      popupAnchor: [-3, -76]
+    })
+
     const providerElements = _.map(providers, function(p,i){
-      return <Marker position={p.pos} key={i}>
+      
+      var pos = [p.lat, p.lon];
+      return <Marker position={pos} key={i} icon={provider_icon}>
         <Popup>
-          <span>{JSON.stringify(p)}</span>
+          <span><b>{p.name}</b><br></br>{p.restaurant}</span>
         </Popup>
       </Marker>
     })
 
-    let userElement
-    if (this.props.user){
-      userElement = <CircleMarker center={this.props.user.pos}/>
-    } else {
-      userElement = ''
-    }
 
     // Note: .bind(this) is important for the handler function's 'this'
     // pointer to refer to this MapView instance
@@ -31,7 +34,6 @@ class MapView extends React.Component {
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         />
         {providerElements}
-        {userElement}
       </Map>
   }
 
