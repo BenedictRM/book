@@ -1,4 +1,140 @@
-TODO:
+<!DOCTYPE html>
+  <html>
+    <head>
+	  <!--Set to device screen-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+      <!--Import Google Icon Font-->
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <!--Import materialize.css-->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
 
-<div>Links to the pages of your app's mockup</div>
-<div>Writeup of your ideation</div>
+      <!--Let browser know website is optimized for mobile-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+
+    <body>
+      <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+      <script src="https://cdn.firebase.com/js/client/2.3.2/firebase.js"></script>
+	  
+	  <div class="container">		
+		
+		<nav class="blue-grey darken-1">
+			<ul id="nav-mobile" class="left hide-on-med-and-down">
+			    <li><a href="/">Home</a></li>
+				<li><a href="./mockup.html">Mockup</a></li>
+	        </ul>
+		</nav>
+		
+		<h1 align="center" style="font-family:verdana;">
+		    <span class="title"><u><b>Ideation</b></u></span>			
+		</h1>
+		<div style="text-align: center;">
+			<p>
+				<a class="waves-effect waves-light btn" href="./mockup.html">To Mockup</a>
+			</p>
+		</div>	
+			  
+		<div class="col s12 m6">
+		  <div class="card blue-grey darken-1">
+			<div class="card-content white-text">
+			  <span class="card-title"><h2><font color = orange>App Name</font></h2></span>
+			  <p><font size = 6>Ways and Means</font></p>
+			</div>
+		  </div>
+		</div>
+		
+		<div class="col s12 m6">
+		  <div class="card blue-grey darken-1">
+			<div class="card-content white-text">
+			  <span class="card-title"><h2><font color = orange>Collaborative Activity Type</font></h2></span>
+			  <p><font size = 6>The goal of this app is to simulate an election--originally conceived
+								for another game I was developing on my own (though never implemented).
+								The basic functionality of the app would be to elect players/users 
+								into various roles for a political simulator (e.g. President, Senator etc.)
+								each of which will have varying powers.  For this app however powers will
+								just be listed as strings rather than implemented.</p><p></p>
+								<p>Another idea is to allow players regions be visible on a map and 
+								simulating something similar to a typical electorate. If time permits, players
+								will be able to launch campaigns before voting occurs</font></p>
+			</div>
+		  </div>
+		</div>
+		
+		<div class="col s12 m6">
+		  <div class="card blue-grey darken-1">
+			<div class="card-content white-text">
+			  <span class="card-title"><h2><font color = orange>Ideal Number of Users</font></h2></span>
+			  <p><font size = 6>10-100-- A cap of 100 players should limit game runtimes to something reasonable</font></p>
+			</div>
+		  </div>
+		</div>
+		
+		<div class="col s12 m6">
+		  <div class="card blue-grey darken-1">
+			<div class="card-content white-text">
+			  <span class="card-title"><h2><font color = orange>Necessary User Skills</font></h2></span>
+			  <p><font size = 6>Users wouldn't need too many skills beyond a basic understanding of
+			  U.S. elections processes and access to (and ability to) use computers.  The game will
+			  likely be timed as well so users would need to be responsible to time limits in the 
+			  voting</font></p>
+			</div>
+		  </div>
+		</div>
+		
+		<div class="col s12 m6">
+		  <div class="card blue-grey darken-1">
+			<div class="card-content white-text">
+			  <span class="card-title"><h2><font color = orange>Activity Type (e.g. fun)</font></h2></span>
+			  <p><font size = 6>The primary activity type for this app is for fun/playing a game</font></p>
+			</div>
+		  </div>
+		</div>
+			  
+		<div class="col s12 m6">
+		  <div class="card blue-grey darken-1">
+			<div class="card-content white-text">
+			  <span class="card-title"><h2><font color = orange>How Can a Person View Current Activity?</font></h2></span>
+			  <p><font size = 6>The app will likely use firebase to store users/election results.  Due to this  
+			                    data storage method, it will be easy to pull results live into an app 
+								and display live election results.  This could initially be done by just displaying
+								results with text and as the app progresses it might be possible to display results
+								using a map that changed colors depending on how results are occuring.  An early idea would
+								be to limit the game to two parties and two candidates that everyone votes on to limit the
+								scope.  This would make it easier to display the map.</font></p>
+			</div>
+		  </div>
+		</div>
+		
+		<div class="col s12 m6">
+		  <div class="card blue-grey darken-1">
+			<div class="card-content white-text">
+			  <span class="card-title"><h2><font color = orange>How Can Users View Results</font></h2></span>
+			  <p><font size = 6>When the time limit has expired the user simply has to view the
+			                    same page as the live results--though updates would cease at this pointe,
+								and perhaps a card or popup would inform users of the winner.</font></p>
+			</div>
+		  </div>
+		</div>
+		
+		<div class="col s12 m6">
+		  <div class="card blue-grey darken-1">
+			<div class="card-content white-text">
+			  <span class="card-title"><h2><font color = orange>What Can Admin See</font></h2></span>
+			  <p><font size = 6>Admin can see everything users can see, as well as who is currently online.
+			                    Perhaps admin could also grant time extensions as needed for games.</font></p>
+			</div>
+		  </div>
+		</div>
+		
+		<div style="text-align: center;">
+			<p>
+				<a class="waves-effect waves-light btn" href="./mockup.html">To Mockup</a>
+			</p>
+		</div>	
+			  
+	   </div>
+	  
+	  
+    </body>
+  </html>

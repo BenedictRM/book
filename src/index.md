@@ -2,8 +2,7 @@
 layout: layout.hbs
 ---
 
-# Book
-
+# Russ Mehring's Book: 
 Everything I've learned from UCDD 2 - Spring 2016.
 
 ## Apps
@@ -23,6 +22,7 @@ Everything I've learned from UCDD 2 - Spring 2016.
     * [Data Models](apps/together/mockup/data.html)
   * [Mockup Team](apps/together/mockup-team) <span class="chip red">NEW</span>        
   * [ReactJS](apps/together)
+  * [Group Proposal](/apps/together/proposal/index.html)
 
 ## Learning
 * [Week 8](learning/week8) <span class="chip red">NEW</span>
