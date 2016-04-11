@@ -2,7 +2,8 @@
 layout: layout.hbs
 ---
 
-# Russ Mehring's Book: 
+# Book
+
 Everything I've learned from UCDD 2 - Spring 2016.
 
 ## Apps
@@ -20,12 +21,12 @@ Everything I've learned from UCDD 2 - Spring 2016.
 * Together
   * [Mockup](apps/together/mockup)
     * [Data Models](apps/together/mockup/data.html)
-  * [Mockup Team](apps/together/mockup-team)       
-  * [ReactPolive](apps/together/mockup-team/new)<span class="chip red">NEW</span>  
-  * [Group Proposal](/apps/together/proposal/index.html)
+  * [Mockup Team](apps/together/mockup-team)
+  * [ReactJS](apps/together)
 
 ## Learning
-* [Week 11](learning/week11)  <span class="chip red">NEW</span>
+* [Week 13](learning/week13) <span class="chip red">NEW</span>
+* [Week 11](learning/week11)  
 * [Week 8](learning/week8)
 * [Week 7](learning/week7)
 * [Week 6](learning/week6)
@@ -36,8 +37,11 @@ Everything I've learned from UCDD 2 - Spring 2016.
 * [Week 1](learning/week1)
 * [Intro](learning/intro)
 
+## Upcoming
+* [Week 14](learning/week14)
+
 ## Hackathons
-* [02-29](hackathons/02-29) <span class="chip red">NEW</span>
+* [02-29](hackathons/02-29)
 * [02-22](hackathons/02-22)
 * [02-15](hackathons/02-15)
 * [02-08](hackathons/02-08)
