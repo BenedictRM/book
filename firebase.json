@@ -1,5 +1,5 @@
 {
-  "firebase": "ucdd2-book",
+  "firebase": "mehring-resume",
   "public": "build",
   "ignore": [
     "firebase.json",
